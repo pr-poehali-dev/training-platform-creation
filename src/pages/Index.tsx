@@ -199,34 +199,14 @@ const Index = () => {
 
       {/* 4. Оценка технических компетенций */}
       <Section id="assessment" num="04" title="Оценка технических компетенций" dark>
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <div>
-            <p className="text-white/70 mb-6 text-lg">
-              Проведём независимую оценку компетентности персонала Заказчика. Выявим сильные
-              стороны и зоны роста, сформируем рекомендации по развитию команды.
-            </p>
-            <Button className="bg-accent text-white hover:bg-accent/90 font-display uppercase tracking-wide rounded-none h-12 px-8">
-              <Icon name="MessageSquare" size={18} className="mr-2" />
-              Связаться со Школой ТОФС
-            </Button>
-          </div>
-          <div className="bg-white/[0.04] border border-white/10 p-10">
-            <div className="grid grid-cols-3 gap-6 text-center">
-              {[
-                { icon: 'ClipboardCheck', l: 'Тестирование' },
-                { icon: 'Users', l: 'Интервью' },
-                { icon: 'FileBarChart', l: 'Отчёт' },
-              ].map((s) => (
-                <div key={s.l}>
-                  <div className="w-14 h-14 mx-auto bg-accent/15 flex items-center justify-center mb-3">
-                    <Icon name={s.icon} size={26} className="text-accent" />
-                  </div>
-                  <div className="text-white/70 text-sm uppercase tracking-wide">{s.l}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+        <p className="text-white/70 mb-8 text-lg max-w-2xl">
+          Проведём независимую оценку компетентности персонала Заказчика. Выявим сильные
+          стороны и зоны роста, сформируем рекомендации по развитию команды.
+        </p>
+        <Button className="bg-accent text-white hover:bg-accent/90 font-display uppercase tracking-wide rounded-none h-12 px-8">
+          <Icon name="MessageSquare" size={18} className="mr-2" />
+          Связаться со Школой ТОФС
+        </Button>
       </Section>
 
       {/* 5. Документы */}
