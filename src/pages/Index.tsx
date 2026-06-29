@@ -13,23 +13,17 @@ const NAV = [
 ];
 
 const QUAL_COURSES = [
-  { title: 'Заканчивание скважин', price: '85 000 ₽', dates: '14–18 июля 2026' },
-  { title: 'Буровые растворы и промывочные жидкости', price: '72 000 ₽', dates: '21–25 июля 2026' },
-  { title: 'Контроль скважины и ГНВП', price: '64 000 ₽', dates: '4–8 августа 2026' },
-  { title: 'Цементирование обсадных колонн', price: '78 000 ₽', dates: '18–22 августа 2026' },
-  { title: 'Телеметрия и геонавигация (MWD/LWD)', price: '94 000 ₽', dates: '1–5 сентября 2026' },
-  { title: 'Супервайзинг буровых работ', price: '110 000 ₽', dates: '15–19 сентября 2026' },
+  { title: 'Заканчивание скважин', price: 'ХХХ', dates: '14–18 июля 2026' },
+  { title: 'Буровые растворы и промывочные жидкости', price: 'ХХХ', dates: '21–25 июля 2026' },
+  { title: 'Контроль скважины и ГНВП', price: 'ХХХ', dates: '4–8 августа 2026' },
+  { title: 'Цементирование обсадных колонн', price: 'ХХХ', dates: '18–22 августа 2026' },
+  { title: 'Телеметрия и геонавигация (MWD/LWD)', price: 'ХХХ', dates: '1–5 сентября 2026' },
+  { title: 'Супервайзинг буровых работ', price: 'ХХХ', dates: '15–19 сентября 2026' },
 ];
 
 const CUSTOM_DISCIPLINES = [
   'Наклонно-направленное бурение',
-  'Гидравлика буровых растворов',
-  'Заканчивание и освоение скважин',
-  'Геомеханика ствола скважины',
-  'Управление давлением (MPD)',
-  'Капитальный ремонт скважин',
-  'Бурение горизонтальных секций',
-  'Промысловая геофизика',
+  'Наклонно-направленное бурение',
 ];
 
 const ASSESSMENT_DISCIPLINES = [
@@ -105,9 +99,6 @@ const Index = () => {
       <Section id="retraining" num="01" title="Профессиональная переподготовка" first>
         <div className="grid lg:grid-cols-2 gap-10 items-start">
           <div className="bg-card border border-border p-8 md:p-10">
-            <div className="inline-block bg-accent/15 text-accent text-xs uppercase tracking-[0.15em] px-3 py-1 mb-5 font-medium">
-              Флагманская программа
-            </div>
             <h3 className="font-display font-bold text-3xl text-primary mb-4">
               Инженер по наклонно-направленному бурению
             </h3>
@@ -119,7 +110,7 @@ const Index = () => {
             <div className="space-y-4 mb-8">
               <InfoRow icon="Briefcase" label="Должность" value="Инженер по ННБ" />
               <InfoRow icon="Clock" label="Продолжительность" value="512 часов · 4 месяца" />
-              <InfoRow icon="Wallet" label="Стоимость" value="180 000 ₽" />
+              <InfoRow icon="Wallet" label="Стоимость" value="ХХХ" />
             </div>
             <Button
               onClick={() => setModalOpen(true)}
@@ -188,10 +179,10 @@ const Index = () => {
           Разработаем курс под задачи вашей компании. Выберите дисциплину — мы подготовим
           программу под уровень и численность вашего персонала.
         </p>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {CUSTOM_DISCIPLINES.map((d) => (
+        <div className="grid sm:grid-cols-2 gap-4">
+          {CUSTOM_DISCIPLINES.map((d, i) => (
             <button
-              key={d}
+              key={i}
               className="group text-left bg-card border border-border p-6 hover:border-accent hover:shadow-lg transition-all"
             >
               <Icon name="Layers" size={22} className="text-accent mb-4" />
@@ -214,14 +205,6 @@ const Index = () => {
               Проведём независимую оценку компетентности персонала Заказчика. Выявим сильные
               стороны и зоны роста, сформируем рекомендации по развитию команды.
             </p>
-            <div className="grid grid-cols-2 gap-3 mb-8">
-              {ASSESSMENT_DISCIPLINES.map((d) => (
-                <div key={d} className="flex items-center gap-2 text-white/80">
-                  <Icon name="CircleCheck" size={18} className="text-accent shrink-0" />
-                  <span className="text-sm">{d}</span>
-                </div>
-              ))}
-            </div>
             <Button className="bg-accent text-white hover:bg-accent/90 font-display uppercase tracking-wide rounded-none h-12 px-8">
               <Icon name="MessageSquare" size={18} className="mr-2" />
               Связаться со Школой ТОФС
@@ -241,10 +224,6 @@ const Index = () => {
                   <div className="text-white/70 text-sm uppercase tracking-wide">{s.l}</div>
                 </div>
               ))}
-            </div>
-            <div className="border-t border-white/10 mt-8 pt-8 text-center">
-              <div className="font-display font-bold text-accent text-3xl mb-1">3 этапа</div>
-              <div className="text-white/50 text-sm uppercase tracking-wide">комплексной оценки</div>
             </div>
           </div>
         </div>
@@ -272,8 +251,7 @@ const Index = () => {
               <h4 className="font-display font-bold text-xl mb-1">Образовательная лицензия</h4>
               <p className="text-white/60 text-sm max-w-xl">
                 Школа ТОФС осуществляет образовательную деятельность на основании лицензии,
-                выданной в установленном законом порядке. Все выдаваемые документы имеют
-                юридическую силу.
+                выданной в установленном законом порядке.
               </p>
             </div>
           </div>
