@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import Icon from '@/components/ui/icon';
 import { Button } from '@/components/ui/button';
-
-const HERO_IMG =
-  'https://cdn.poehali.dev/projects/f17dec88-35c4-4179-a9f6-0ff9079588d1/files/18e0c339-f171-47f8-a7b9-fa0e0ae63a97.jpg';
+import { Input } from '@/components/ui/input';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 
 const NAV = [
   { id: 'retraining', label: 'Переподготовка' },
@@ -48,11 +47,30 @@ const DOCUMENTS = [
   { title: 'Сертификат участника тренинга', icon: 'Award', desc: 'Подтверждение участия в кастомизированной программе' },
 ];
 
+interface LeadForm {
+  name: string;
+  phone: string;
+  email: string;
+  company: string;
+}
+
 const Index = () => {
-  const [activeSection, setActiveSection] = useState('');
+  const [modalOpen, setModalOpen] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [form, setForm] = useState<LeadForm>({ name: '', phone: '', email: '', company: '' });
 
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitted(true);
+  };
+
+  const handleClose = () => {
+    setModalOpen(false);
+    setTimeout(() => { setSubmitted(false); setForm({ name: '', phone: '', email: '', company: '' }); }, 300);
   };
 
   return (
@@ -62,7 +80,7 @@ const Index = () => {
         <div className="container flex items-center justify-between h-16">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 bg-accent flex items-center justify-center">
-              <span className="font-display font-bold text-primary text-lg">Т</span>
+              <span className="font-display font-bold text-white text-lg">Т</span>
             </div>
             <div className="leading-tight">
               <div className="font-display font-bold text-white tracking-wide text-lg">ШКОЛА ТОФС</div>
@@ -83,65 +101,8 @@ const Index = () => {
         </div>
       </header>
 
-      {/* Hero */}
-      <section className="relative min-h-[92vh] flex items-center pt-16 overflow-hidden">
-        <div className="absolute inset-0">
-          <img src={HERO_IMG} alt="Буровая установка" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/90 to-primary/40" />
-          <div className="absolute inset-0 hero-grid opacity-40" />
-        </div>
-        <div className="container relative z-10">
-          <div className="max-w-2xl animate-fade-up">
-            <div className="inline-flex items-center gap-2 px-3 py-1 border border-accent/40 text-accent text-xs uppercase tracking-[0.2em] mb-6">
-              <span className="w-1.5 h-1.5 bg-accent" />
-              Нефтегазовая отрасль
-            </div>
-            <h1 className="font-display font-bold text-white text-5xl md:text-6xl leading-[1.05] mb-6 text-balance">
-              ПОДГОТОВКА ИНЖЕНЕРОВ ДЛЯ БУРОВОЙ ОТРАСЛИ
-            </h1>
-            <p className="text-lg text-white/70 mb-8 max-w-xl">
-              Профессиональная переподготовка, повышение квалификации и кастомизированные
-              тренинги от практикующих экспертов нефтегазовой индустрии.
-            </p>
-            <div className="flex flex-wrap gap-4">
-              <Button
-                onClick={() => scrollTo('retraining')}
-                className="bg-accent text-primary hover:bg-accent/90 font-display uppercase tracking-wide rounded-none h-12 px-8"
-              >
-                Программы обучения
-                <Icon name="ArrowRight" size={18} className="ml-2" />
-              </Button>
-              <Button
-                onClick={() => scrollTo('documents')}
-                variant="outline"
-                className="border-white/30 text-white hover:bg-white/10 font-display uppercase tracking-wide rounded-none h-12 px-8 bg-transparent"
-              >
-                Документы и лицензия
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Stats strip */}
-      <section className="bg-primary border-y border-white/10">
-        <div className="container grid grid-cols-2 md:grid-cols-4 divide-x divide-white/10">
-          {[
-            { n: '12+', l: 'Программ обучения' },
-            { n: '500+', l: 'Выпускников' },
-            { n: '15', l: 'Лет на рынке' },
-            { n: '100%', l: 'Практикующих экспертов' },
-          ].map((s) => (
-            <div key={s.l} className="py-8 px-6 text-center">
-              <div className="font-display font-bold text-accent text-4xl">{s.n}</div>
-              <div className="text-white/60 text-sm mt-1 uppercase tracking-wide">{s.l}</div>
-            </div>
-          ))}
-        </div>
-      </section>
-
       {/* 1. Профессиональная переподготовка */}
-      <Section id="retraining" num="01" title="Профессиональная переподготовка">
+      <Section id="retraining" num="01" title="Профессиональная переподготовка" first>
         <div className="grid lg:grid-cols-2 gap-10 items-start">
           <div className="bg-card border border-border p-8 md:p-10">
             <div className="inline-block bg-accent/15 text-accent text-xs uppercase tracking-[0.15em] px-3 py-1 mb-5 font-medium">
@@ -160,7 +121,10 @@ const Index = () => {
               <InfoRow icon="Clock" label="Продолжительность" value="512 часов · 4 месяца" />
               <InfoRow icon="Wallet" label="Стоимость" value="180 000 ₽" />
             </div>
-            <Button className="bg-primary text-white hover:bg-primary/90 font-display uppercase tracking-wide rounded-none h-12 px-8 w-full sm:w-auto">
+            <Button
+              onClick={() => setModalOpen(true)}
+              className="bg-accent text-white hover:bg-accent/90 font-display uppercase tracking-wide rounded-none h-12 px-8 w-full sm:w-auto"
+            >
               Приобрести курс
               <Icon name="ShoppingCart" size={18} className="ml-2" />
             </Button>
@@ -171,7 +135,7 @@ const Index = () => {
               <div className="absolute inset-0 hero-grid opacity-20" />
               <div className="relative z-10 text-center">
                 <div className="w-16 h-16 mx-auto bg-accent rounded-full flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                  <Icon name="Play" size={28} className="text-primary ml-1" />
+                  <Icon name="Play" size={28} className="text-white ml-1" />
                 </div>
                 <div className="text-white/80 font-display uppercase tracking-wide text-sm">
                   О профессии · 3 мин
@@ -258,7 +222,7 @@ const Index = () => {
                 </div>
               ))}
             </div>
-            <Button className="bg-accent text-primary hover:bg-accent/90 font-display uppercase tracking-wide rounded-none h-12 px-8">
+            <Button className="bg-accent text-white hover:bg-accent/90 font-display uppercase tracking-wide rounded-none h-12 px-8">
               <Icon name="MessageSquare" size={18} className="mr-2" />
               Связаться со Школой ТОФС
             </Button>
@@ -280,9 +244,7 @@ const Index = () => {
             </div>
             <div className="border-t border-white/10 mt-8 pt-8 text-center">
               <div className="font-display font-bold text-accent text-3xl mb-1">3 этапа</div>
-              <div className="text-white/50 text-sm uppercase tracking-wide">
-                комплексной оценки
-              </div>
+              <div className="text-white/50 text-sm uppercase tracking-wide">комплексной оценки</div>
             </div>
           </div>
         </div>
@@ -304,7 +266,7 @@ const Index = () => {
         <div className="bg-primary text-white p-8 md:p-10 flex flex-col md:flex-row items-start md:items-center gap-6 justify-between">
           <div className="flex items-start gap-5">
             <div className="w-14 h-14 bg-accent shrink-0 flex items-center justify-center">
-              <Icon name="ShieldCheck" size={28} className="text-primary" />
+              <Icon name="ShieldCheck" size={28} className="text-white" />
             </div>
             <div>
               <h4 className="font-display font-bold text-xl mb-1">Образовательная лицензия</h4>
@@ -331,20 +293,16 @@ const Index = () => {
           <div>
             <div className="flex items-center gap-3 mb-4">
               <div className="w-9 h-9 bg-accent flex items-center justify-center">
-                <span className="font-display font-bold text-primary text-lg">Т</span>
+                <span className="font-display font-bold text-white text-lg">Т</span>
               </div>
-              <span className="font-display font-bold text-white tracking-wide text-lg">
-                ШКОЛА ТОФС
-              </span>
+              <span className="font-display font-bold text-white tracking-wide text-lg">ШКОЛА ТОФС</span>
             </div>
             <p className="text-white/50 text-sm">
               Профессиональное обучение специалистов нефтегазовой отрасли.
             </p>
           </div>
           <div>
-            <div className="font-display uppercase tracking-wide text-white/40 text-xs mb-4">
-              Разделы
-            </div>
+            <div className="font-display uppercase tracking-wide text-white/40 text-xs mb-4">Разделы</div>
             <div className="space-y-2">
               {NAV.map((n) => (
                 <button
@@ -358,9 +316,7 @@ const Index = () => {
             </div>
           </div>
           <div>
-            <div className="font-display uppercase tracking-wide text-white/40 text-xs mb-4">
-              Контакты
-            </div>
+            <div className="font-display uppercase tracking-wide text-white/40 text-xs mb-4">Контакты</div>
             <div className="space-y-2 text-white/70 text-sm">
               <div className="flex items-center gap-2">
                 <Icon name="Mail" size={16} className="text-accent" />
@@ -377,36 +333,126 @@ const Index = () => {
           © 2026 Школа ТОФС. Все права защищены.
         </div>
       </footer>
+
+      {/* Модальное окно заявки */}
+      <Dialog open={modalOpen} onOpenChange={handleClose}>
+        <DialogContent className="sm:max-w-md rounded-none border-border p-0 overflow-hidden">
+          <div className="bg-primary px-8 py-6">
+            <DialogHeader>
+              <DialogTitle className="font-display font-bold text-white text-2xl uppercase tracking-wide">
+                Оставьте заявку
+              </DialogTitle>
+            </DialogHeader>
+            <p className="text-white/60 text-sm mt-1">
+              Мы свяжемся с вами в течение рабочего дня
+            </p>
+          </div>
+
+          {submitted ? (
+            <div className="px-8 py-12 text-center">
+              <div className="w-16 h-16 mx-auto bg-accent/15 rounded-full flex items-center justify-center mb-4">
+                <Icon name="CircleCheck" size={32} className="text-accent" />
+              </div>
+              <h3 className="font-display font-bold text-primary text-2xl mb-2">Заявка отправлена</h3>
+              <p className="text-muted-foreground text-sm mb-6">
+                Наш менеджер свяжется с вами в ближайшее время
+              </p>
+              <Button
+                onClick={handleClose}
+                className="bg-accent text-white hover:bg-accent/90 font-display uppercase tracking-wide rounded-none h-11 px-8"
+              >
+                Закрыть
+              </Button>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="px-8 py-6 space-y-4">
+              <div>
+                <label className="text-xs uppercase tracking-wide text-muted-foreground mb-1.5 block">
+                  Имя и фамилия *
+                </label>
+                <Input
+                  required
+                  value={form.name}
+                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  placeholder="Иван Петров"
+                  className="rounded-none border-border h-11"
+                />
+              </div>
+              <div>
+                <label className="text-xs uppercase tracking-wide text-muted-foreground mb-1.5 block">
+                  Телефон *
+                </label>
+                <Input
+                  required
+                  type="tel"
+                  value={form.phone}
+                  onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                  placeholder="+7 (900) 000-00-00"
+                  className="rounded-none border-border h-11"
+                />
+              </div>
+              <div>
+                <label className="text-xs uppercase tracking-wide text-muted-foreground mb-1.5 block">
+                  Email
+                </label>
+                <Input
+                  type="email"
+                  value={form.email}
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                  placeholder="ivan@company.ru"
+                  className="rounded-none border-border h-11"
+                />
+              </div>
+              <div>
+                <label className="text-xs uppercase tracking-wide text-muted-foreground mb-1.5 block">
+                  Компания
+                </label>
+                <Input
+                  value={form.company}
+                  onChange={(e) => setForm({ ...form, company: e.target.value })}
+                  placeholder="ООО «Нефтегаз»"
+                  className="rounded-none border-border h-11"
+                />
+              </div>
+              <div className="pt-2">
+                <Button
+                  type="submit"
+                  className="bg-accent text-white hover:bg-accent/90 font-display uppercase tracking-wide rounded-none h-12 px-8 w-full"
+                >
+                  Отправить заявку
+                  <Icon name="ArrowRight" size={18} className="ml-2" />
+                </Button>
+                <p className="text-xs text-muted-foreground mt-3 text-center">
+                  Нажимая кнопку, вы соглашаетесь с политикой обработки персональных данных
+                </p>
+              </div>
+            </form>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
 
 const Section = ({
-  id,
-  num,
-  title,
-  children,
-  dark,
+  id, num, title, children, dark, first,
 }: {
   id: string;
   num: string;
   title: string;
   children: React.ReactNode;
   dark?: boolean;
+  first?: boolean;
 }) => (
   <section
     id={id}
-    className={`py-20 md:py-28 scroll-mt-16 ${dark ? 'bg-primary' : 'bg-background'}`}
+    className={`py-20 md:py-28 scroll-mt-16 ${first ? 'pt-28 md:pt-32' : ''} ${dark ? 'bg-primary' : 'bg-background'}`}
   >
     <div className="container">
       <div className="flex items-baseline gap-4 mb-12">
         <span className="font-display font-bold text-accent text-2xl">{num}</span>
         <span className={`h-px flex-1 max-w-[60px] ${dark ? 'bg-white/20' : 'bg-border'}`} />
-        <h2
-          className={`font-display font-bold text-3xl md:text-4xl uppercase tracking-tight ${
-            dark ? 'text-white' : 'text-primary'
-          }`}
-        >
+        <h2 className={`font-display font-bold text-3xl md:text-4xl uppercase tracking-tight ${dark ? 'text-white' : 'text-primary'}`}>
           {title}
         </h2>
       </div>
