@@ -252,12 +252,10 @@ const Index = () => {
               </div>
               <span className="font-display font-bold text-white tracking-wide text-lg">ШКОЛА ТОФС</span>
             </div>
-            <p className="text-white/50 text-sm">
-              Профессиональное обучение специалистов нефтегазовой отрасли.
-            </p>
+            <p className="text-white/50 text-sm"></p>
           </div>
           <div>
-            <div className="font-display uppercase tracking-wide text-white/40 text-xs mb-4">Разделы</div>
+            <div className="font-display uppercase tracking-wide text-white/40 text-xs mb-4"></div>
             <div className="space-y-2">
               {NAV.map((n) => (
                 <button
