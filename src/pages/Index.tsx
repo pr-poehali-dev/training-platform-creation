@@ -133,10 +133,7 @@ const Index = () => {
                 </div>
               </div>
             </div>
-            <p className="text-sm text-muted-foreground px-1">
-              Короткое видео раскрывает суть профессии инженера по наклонно-направленному
-              бурению и перспективы работы в отрасли.
-            </p>
+            <p className="text-sm text-muted-foreground px-1"></p>
           </div>
         </div>
       </Section>
