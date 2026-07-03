@@ -271,10 +271,7 @@ const Index = () => {
           <div>
             <div className="font-display uppercase tracking-wide text-white/40 text-xs mb-4">Контакты</div>
             <div className="space-y-2 text-white/70 text-sm">
-              <div className="flex items-center gap-2">
-                <Icon name="Mail" size={16} className="text-accent" />
-                info@tofsgroup.ru
-              </div>
+              <div className="flex items-center gap-2">school@tofsgroup.ru</div>
               <div className="flex items-center gap-2">Тюмень, Старый Тобольский тракт,
 2-й километр, 8с25, офис 331</div>
             </div>
