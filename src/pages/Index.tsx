@@ -78,7 +78,7 @@ const Index = () => {
             </div>
             <div className="leading-tight">
               <div className="font-display font-bold text-white tracking-wide text-lg">ШКОЛА ТОФС</div>
-              <div className="text-[10px] uppercase tracking-[0.2em] text-white/50">Профессиональное обучение</div>
+              <div className="text-[10px] uppercase tracking-[0.2em] text-white/50">Центр технических компетенций и обучения ГК ТОФС</div>
             </div>
           </div>
           <nav className="hidden lg:flex items-center gap-7">
