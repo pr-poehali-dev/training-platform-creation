@@ -275,10 +275,8 @@ const Index = () => {
                 <Icon name="Mail" size={16} className="text-accent" />
                 info@tofsgroup.ru
               </div>
-              <div className="flex items-center gap-2">
-                <Icon name="MapPin" size={16} className="text-accent" />
-                Россия, нефтегазовый регион
-              </div>
+              <div className="flex items-center gap-2">Тюмень, Старый Тобольский тракт,
+2-й километр, 8с25, офис 331</div>
             </div>
           </div>
         </div>
